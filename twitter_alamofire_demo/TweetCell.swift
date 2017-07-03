@@ -11,10 +11,14 @@ import UIKit
 class TweetCell: UITableViewCell {
     
     @IBOutlet weak var tweetTextLabel: UILabel!
+    @IBOutlet weak var tweetImageView: UIImageView!
+    @IBOutlet weak var tweetAuthorLabel: UILabel!
     
     var tweet: Tweet! {
         didSet {
             tweetTextLabel.text = tweet.text
+            tweetImageView.
+            tweetAuthorLabel.image = tweet.author
         }
     }
     
