@@ -14,12 +14,12 @@ class User {
     
     var name: String
     var screenName: String
-    var image: URL?
+    var imageURL: URL?
     
     init(dictionary: [String: Any]) {
         name = dictionary["name"] as! String
         screenName = dictionary["screen_name"] as! String
-        image = URL(string: dictionary["profile_image_url"] as! String)
+        imageURL = URL(string: dictionary["profile_image_url"] as! String)
     }
     
     static func tweets(with array: [[String: Any]]) -> [Tweet] {
