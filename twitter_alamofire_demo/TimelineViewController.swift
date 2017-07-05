@@ -69,26 +69,15 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         // Dispose of any resources that can be recreated.
     }
     
-    private func cellPositionFor(_ sender: AnyObject) -> TweetCell {
-        let buttonPosition = sender.convert(CGPoint(), to:tableView)
-        let indexPath = tableView.indexPathForRow(at:buttonPosition)
+    private func cellPositionFor(_ sender: AnyObject) -> Tweet {
+        let buttonPosition = sender.convert(CGPoint(), to: tableView)
+        let indexPath = tableView.indexPathForRow(at: buttonPosition)!
+        return tweets[indexPath.row]
     }
     
     
     @IBAction func didTapLogout(_ sender: Any) {
         APIManager.shared.logout()
-    }
-    
-    @IBAction func didTapReply(_ sender: Any) {
-
-    }
-    
-    @IBAction func didTapRetweet(_ sender: Any) {
-        let cell =
-    }
-    
-    @IBAction func didTapFavorite(_ sender: Any) {
-        
     }
     
     /*
