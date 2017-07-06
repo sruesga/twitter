@@ -29,6 +29,14 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.insertSubview(refreshControl, at: 0)
 
         loadData(withRefresh: true)
+        
+        
+        let logo = UIImage(named: "TwitterLogoBlue")
+        let size = self.navigationController!.navigationBar.frame.height
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: size, height: size))
+        imageView.image = logo
+        imageView.contentMode = .scaleAspectFit
+        self.navigationItem.titleView = imageView
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -91,7 +99,5 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
      // Get the new view controller using segue.destinationViewController.
      // Pass the selected object to the new view controller.
-     }
-     */
-    
+     }*/
 }
