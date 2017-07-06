@@ -80,6 +80,10 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         APIManager.shared.logout()
     }
     
+    @IBAction func didTapCompose(_ sender: Any) {
+        self.performSegue(withIdentifier: "ComposeTweetSegue", sender: nil)
+    }
+    
     /*
      // MARK: - Navigation
      

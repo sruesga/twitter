@@ -7,13 +7,24 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class ComposeViewController: UIViewController {
 
+    
+    @IBOutlet weak var userProfileImageView: UIImageView!
+    
+    var user: User!
+    var profileImage: UIImage!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        userProfileImageView.clipsToBounds = true
+        userProfileImageView.layer.masksToBounds = true
+        userProfileImageView.layer.cornerRadius = 40
+        userProfileImageView.image = profileImage
     }
 
     override func didReceiveMemoryWarning() {
