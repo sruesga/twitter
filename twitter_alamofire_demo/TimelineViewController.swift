@@ -28,7 +28,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         refreshControl.addTarget(self, action: #selector(loadData(withRefresh:)), for: UIControlEvents.valueChanged)
         tableView.insertSubview(refreshControl, at: 0)
 
-        loadData(withRefresh: true)
+        loadData(withRefresh: false)
         
         
         let logo = UIImage(named: "TwitterLogoBlue")
@@ -92,12 +92,21 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         self.performSegue(withIdentifier: "ComposeTweetSegue", sender: nil)
     }
     
-    /*
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
      // Get the new view controller using segue.destinationViewController.
      // Pass the selected object to the new view controller.
-     }*/
+        let nav = segue.destination as! UINavigationController
+        let vc = nav.viewControllers[0] as! ComposeViewController
+        vc.delegate = self
+     }
+}
+
+extension TimelineViewController: ComposeViewControllerDelegate {
+    func did(post: Tweet) {
+        tweets.insert(post, at: 0)
+        tableView.reloadData()
+    }
 }

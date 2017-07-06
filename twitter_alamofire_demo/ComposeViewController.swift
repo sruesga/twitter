@@ -23,8 +23,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var characterCountLabel: UILabel!
     @IBOutlet weak var tweetTextView: UITextView!
     
-    var user: User!
-    var profileImage: UIImage!
+    var buttonColor: UIColor!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,16 +33,15 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         tweetTextView.delegate = self
         userProfileImageView.clipsToBounds = true
         userProfileImageView.layer.masksToBounds = true
-        userProfileImageView.layer.cornerRadius = 40
-        userProfileImageView.image = profileImage
-        
+        userProfileImageView.layer.cornerRadius = 25
+        userProfileImageView.af_setImage(withURL: User.current!.imageURL!)
+
         tweetButton.layer.cornerRadius = tweetButton.frame.height/2
         tweetButton.isEnabled = false
+        buttonColor = tweetButton.backgroundColor
     }
     
     
-    // #4C9DEB r:76 g:157 b:235 for 20 < count < 140 for tweetButton
-    // #F02C32 r:240 g:44 b:50 for count <= 20 for tweetButton
     func textViewDidChange(_ textView: UITextView) {
         let numChars = 140 - tweetTextView.text.characters.count
         characterCountLabel.text = String(numChars)
@@ -51,32 +49,23 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         if numChars > 20 {
             characterCountLabel.textColor = .darkGray
         } else {
-            characterCountLabel.textColor = UIColor(red: 240.0/255.0, green: 44.0/255.0, blue: 50.0/255.0, alpha: 1.0)
-        }
-        
-        var color: UIColor
-        if numChars >= 0 {
-            color = UIColor(red: 76.0/255.0, green: 157.0/255.0, blue: 235.0/255.0, alpha: 1.0)
-        } else {
-            color = characterCountLabel.textColor
+            characterCountLabel.textColor = .red
         }
         
         if numChars >= 140 || numChars < 0 {
             tweetButton.isEnabled = false
-//            color = color.withAlphaComponent(0.5)
+            tweetButton.backgroundColor = buttonColor.withAlphaComponent(0.5)
         } else {
             tweetButton.isEnabled = true
-//            color = color.withAlphaComponent(1.0)
+            tweetButton.backgroundColor = buttonColor
         }
-        
-        tweetButton.backgroundColor = color
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if (textView.text == "What's happening?")
-        {
+        if (textView.text == "What's happening?") {
             textView.text = ""
             textView.textColor = .black
+            tweetButton.backgroundColor = buttonColor.withAlphaComponent(0.5)
         }
     }
     
@@ -91,7 +80,15 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func didTapTweetButton(_ sender: Any) {
-        
+        APIManager.shared.composeTweet(with: tweetTextView.text) { (tweet, error) in
+            if let error = error {
+                print("Error composing Tweet: \(error.localizedDescription)")
+            } else if let tweet = tweet {
+                self.delegate?.did(post: tweet)
+                print("Compose Tweet Success!")
+            }
+        }
+        self.dismiss(animated: true, completion: nil)
     }
     
     /*
