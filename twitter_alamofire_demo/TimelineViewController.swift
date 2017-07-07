@@ -34,12 +34,15 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         loadData(withRefresh: false)
         
         
-        let logo = UIImage(named: "TwitterLogoBlue")
-        let size = self.navigationController!.navigationBar.frame.height
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: size, height: size))
-        imageView.image = logo
-        imageView.contentMode = .scaleAspectFit
-        self.navigationItem.titleView = imageView
+        
+        if let nav = self.navigationController {
+            let logo = UIImage(named: "TwitterLogoBlue")
+            let size = nav.navigationBar.frame.height
+            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: size, height: size))
+            imageView.image = logo
+            imageView.contentMode = .scaleAspectFit
+            self.navigationItem.titleView = imageView
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

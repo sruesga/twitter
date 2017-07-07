@@ -12,6 +12,10 @@ class ProfileViewController: UIViewController {
 
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var userScreenNameLabel: UILabel!
+    @IBOutlet weak var followingCountLabel: UILabel!
+    @IBOutlet weak var followersCountLabel: UILabel!
     
     
     override func viewDidLoad() {
@@ -20,6 +24,9 @@ class ProfileViewController: UIViewController {
         // Do any additional setup after loading the view.
         profileImageView.layer.borderColor = UIColor.white.cgColor
         profileImageView.layer.borderWidth = 4
+        
+        let user = User.current!
+        
     }
 
     override func didReceiveMemoryWarning() {
