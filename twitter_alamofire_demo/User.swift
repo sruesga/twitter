@@ -39,12 +39,23 @@ class User {
     var name: String
     var screenName: String
     var imageURL: URL?
+    var backgroundImageURL: URL?
+    var backgroundColorHex: String
+    var followerCount: Int
+    var followingCount: Int
     
     init(dictionary: [String: Any]) {
         self.dictionary = dictionary
         name = dictionary["name"] as! String
         screenName = dictionary["screen_name"] as! String
         imageURL = URL(string: dictionary["profile_image_url_https"] as! String)
+        followerCount = dictionary["followers_count"] as! Int
+        followingCount = dictionary["friends_count"] as! Int
+        backgroundColorHex = dictionary["profile_background_color"] as! String
+        
+        if let url = (dictionary["profile_background_image_url_https"] as? String) {
+            backgroundImageURL = URL(string: url)
+        }
     }
     
     static func tweets(with array: [[String: Any]]) -> [Tweet] {

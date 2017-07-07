@@ -1,77 +1,65 @@
 //
-//  TweetCell.swift
+//  DetailViewController.swift
 //  twitter_alamofire_demo
 //
-//  Created by Charles Hieger on 6/18/17.
+//  Created by Skyler Ruesga on 7/6/17.
 //  Copyright © 2017 Charles Hieger. All rights reserved.
 //
 
 import UIKit
-import AlamofireImage
 
-protocol TweetCellDelegate: class {
-    func didTapProfile(of user: User)
-}
+class DetailViewController: UIViewController {
 
-class TweetCell: UITableViewCell {
-    
-    @IBOutlet weak var tweetTextLabel: UILabel!
+    @IBOutlet weak var tweetUserImage: UIButton!
     @IBOutlet weak var tweetAuthorLabel: UILabel!
     @IBOutlet weak var tweetUsernameLabel: UILabel!
+    @IBOutlet weak var tweetTextLabel: UILabel!
     @IBOutlet weak var tweetDateLabel: UILabel!
-    @IBOutlet weak var tweetUserImage: UIButton!
     @IBOutlet weak var retweetCountLabel: UILabel!
     @IBOutlet weak var favoriteCountLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var retweetButton: UIButton!
     
-    weak var delegate: TweetCellDelegate?
+    var tweet: Tweet!
     
-    var tweet: Tweet! {
-        didSet {
-            tweetTextLabel.text = tweet.text
-            tweetAuthorLabel.text = tweet.user.name
-            tweetUserImage.clipsToBounds = true
-            tweetUserImage.layer.masksToBounds = true
-            tweetUserImage.layer.cornerRadius = 10
-            tweetUserImage.af_setBackgroundImage(for: .normal, url: tweet.user.imageURL!)
-            tweetUsernameLabel.text = "@" + tweet.user.screenName
-            tweetDateLabel.text = tweet.createdAtString
-            retweetCountLabel.text = String(tweet.retweetCount)
-            favoriteCountLabel.text = String(tweet.favoriteCount)
-            
-            if tweet.favorited == true {
-                favoriteButton.setImage(UIImage(named: "favor-icon-red"), for: .normal)
-            } else {
-                favoriteButton.setImage(UIImage(named: "favor-icon"), for: .normal)
-            }
-            
-            if tweet.retweeted {
-                retweetButton.setImage(UIImage(named: "retweet-icon-green"), for: .normal)
-            } else {
-                retweetButton.setImage(UIImage(named: "retweet-icon"), for: .normal)
-
-            }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Do any additional setup after loading the view.
+        tweetTextLabel.text = tweet.text
+        tweetAuthorLabel.text = tweet.user.name
+        tweetUserImage.clipsToBounds = true
+        tweetUserImage.layer.masksToBounds = true
+        tweetUserImage.layer.cornerRadius = 10
+        tweetUserImage.af_setBackgroundImage(for: .normal, url: tweet.user.imageURL!)
+        tweetUsernameLabel.text = "@" + tweet.user.screenName
+        tweetDateLabel.text = tweet.createdAtString
+        retweetCountLabel.text = String(tweet.retweetCount)
+        favoriteCountLabel.text = String(tweet.favoriteCount)
+        
+        if tweet.favorited == true {
+            favoriteButton.setImage(UIImage(named: "favor-icon-red"), for: .normal)
+        } else {
+            favoriteButton.setImage(UIImage(named: "favor-icon"), for: .normal)
+        }
+        
+        if tweet.retweeted {
+            retweetButton.setImage(UIImage(named: "retweet-icon-green"), for: .normal)
+        } else {
+            retweetButton.setImage(UIImage(named: "retweet-icon"), for: .normal)
         }
     }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
-    }
-    
     
     @IBAction func didTapReply(_ sender: Any) {
     }
     
     @IBAction func didTapRetweet(_ sender: Any) {
-
+        
         let button = sender as! UIButton
         
         if tweet.retweeted {
@@ -102,7 +90,7 @@ class TweetCell: UITableViewCell {
                 }
             }
         }
-
+        
     }
     
     @IBAction func didTapFavorite(_ sender: Any) {
@@ -137,4 +125,16 @@ class TweetCell: UITableViewCell {
             }
         }
     }
+
+    
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
 }

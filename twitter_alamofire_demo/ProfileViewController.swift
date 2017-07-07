@@ -17,6 +17,8 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var followingCountLabel: UILabel!
     @IBOutlet weak var followersCountLabel: UILabel!
     
+    var user: User?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,8 +27,18 @@ class ProfileViewController: UIViewController {
         profileImageView.layer.borderColor = UIColor.white.cgColor
         profileImageView.layer.borderWidth = 4
         
-        let user = User.current!
+        let myUser = user ?? User.current!
         
+        profileImageView.af_setImage(withURL: myUser.imageURL!)
+        userNameLabel.text = myUser.name
+        userScreenNameLabel.text = "@\(myUser.screenName)"
+        followingCountLabel.text = String(myUser.followingCount)
+        followersCountLabel.text = String(myUser.followerCount)
+        backgroundImageView.backgroundColor = UIColor(hex: myUser.backgroundColorHex)
+        
+        if let url = myUser.backgroundImageURL {
+            backgroundImageView.af_setImage(withURL: url)
+        }
     }
 
     override func didReceiveMemoryWarning() {

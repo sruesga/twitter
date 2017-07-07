@@ -53,12 +53,9 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
         
         cell.tweet = tweets[indexPath.row]
+        cell.delegate = self
         
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func loadData(withRefresh refreshing: Bool) {
@@ -124,15 +121,30 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         self.performSegue(withIdentifier: "ComposeTweetSegue", sender: nil)
     }
     
+    
+    
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
      // Get the new view controller using segue.destinationViewController.
      // Pass the selected object to the new view controller.
-        let nav = segue.destination as! UINavigationController
-        let vc = nav.viewControllers[0] as! ComposeViewController
-        vc.delegate = self
+        
+        switch segue.identifier! {
+        case "ComposeTweetSegue":
+            let nav = segue.destination as! UINavigationController
+            let vc = nav.topViewController as! ComposeViewController
+            vc.delegate = self
+        case "DetailSegue":
+            let vc = segue.destination as! DetailViewController
+            let cell = sender as! TweetCell
+            vc.tweet = cell.tweet
+        case "OtherUserSegue":
+            let vc = segue.destination as! ProfileViewController
+            vc.user = sender as! User
+        default:
+            print("Bad segue from TimelineViewController to \(segue.destination)")
+        }
      }
 }
 
@@ -142,3 +154,10 @@ extension TimelineViewController: ComposeViewControllerDelegate {
         tableView.reloadData()
     }
 }
+
+extension TimelineViewController: TweetCellDelegate {
+    func didTapProfile(of user: User) {
+        performSegue(withIdentifier: "OtherUserSegue", sender: user)
+    }
+}
+
