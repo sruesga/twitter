@@ -39,6 +39,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         tweetButton.layer.cornerRadius = tweetButton.frame.height/2
         tweetButton.isEnabled = false
         buttonColor = tweetButton.backgroundColor
+        tweetButton.backgroundColor = buttonColor.withAlphaComponent(0.5)
     }
     
     

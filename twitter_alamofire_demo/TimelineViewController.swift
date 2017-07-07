@@ -8,10 +8,11 @@
 
 import UIKit
 
-class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
     var tweets: [Tweet] = []
     var refreshControl: UIRefreshControl!
+    var isMoreDataLoading = false
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -20,6 +21,8 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         
         tableView.dataSource = self
         tableView.delegate = self
+        
+        
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
@@ -68,7 +71,33 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             }
             self.refreshControl.endRefreshing()
         }
-
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            // Calculate the position of one screen length before the bottom of the results
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+            
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging) {
+                
+                isMoreDataLoading = true
+                let tweetId = tweets.last!.id
+                // Code to load more results
+                APIManager.shared.getMoreTimelineTweets(with: tweetId) { (tweets, error) in
+                    if let tweets = tweets {
+                        if tweets.count > 1 {
+                            self.tweets += tweets
+                        }
+                        self.tableView.reloadData()
+                    } else if let error = error {
+                        print("Error getting home timeline: " + error.localizedDescription)
+                    }
+                    self.isMoreDataLoading = false
+                }
+            }
+        }
     }
     
     
