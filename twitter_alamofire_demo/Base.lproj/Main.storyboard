@@ -110,6 +110,9 @@
                                                         <constraint firstAttribute="height" constant="50" id="lZV-ft-qrI"/>
                                                     </constraints>
                                                     <state key="normal" backgroundImage="TwitterLogo"/>
+                                                    <connections>
+                                                        <action selector="didTapProfile:" destination="U1g-kw-izy" eventType="touchUpInside" id="UHl-eJ-862"/>
+                                                    </connections>
                                                 </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yK1-MC-vbb" userLabel="buttonView">
                                                     <rect key="frame" x="66" y="101" width="271" height="30"/>
@@ -179,7 +182,6 @@
                                                 <constraint firstItem="epC-Fs-Q5Z" firstAttribute="leading" secondItem="Ucw-JQ-zge" secondAttribute="leading" id="HZb-3K-xRK"/>
                                                 <constraint firstItem="yK1-MC-vbb" firstAttribute="top" relation="greaterThanOrEqual" secondItem="epC-Fs-Q5Z" secondAttribute="bottom" constant="8" id="IRI-Wn-J4c"/>
                                                 <constraint firstItem="epC-Fs-Q5Z" firstAttribute="top" secondItem="Ucw-JQ-zge" secondAttribute="bottom" constant="8" id="NIW-MC-8TT"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="epC-Fs-Q5Z" secondAttribute="bottom" constant="8" id="QRV-cN-t51"/>
                                                 <constraint firstItem="No0-HU-c61" firstAttribute="centerY" secondItem="Ucw-JQ-zge" secondAttribute="centerY" id="SYV-XB-3bB"/>
                                                 <constraint firstItem="Ucw-JQ-zge" firstAttribute="top" secondItem="zd2-Er-659" secondAttribute="top" constant="8" id="cc8-Us-ZvF"/>
                                                 <constraint firstItem="epC-Fs-Q5Z" firstAttribute="leading" secondItem="koO-Sk-0rU" secondAttribute="trailing" constant="8" id="f2u-vT-Eg5"/>
@@ -547,7 +549,7 @@
                                 <rect key="frame" x="0.0" y="276" width="375" height="391"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <connections>
-                                    <segue destination="aIl-Qm-4mz" kind="embed" id="KiM-td-B7H"/>
+                                    <segue destination="aIl-Qm-4mz" kind="embed" identifier="EmbeddedTimeline" id="KiM-td-B7H"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -743,7 +745,6 @@
                                                 <constraint firstItem="APO-c5-RAZ" firstAttribute="leading" secondItem="Jbc-4g-qrM" secondAttribute="trailing" constant="8" id="p6L-LV-OxE"/>
                                                 <constraint firstItem="JkG-AA-Qrr" firstAttribute="top" relation="greaterThanOrEqual" secondItem="APO-c5-RAZ" secondAttribute="bottom" constant="8" id="pZB-CV-KTW"/>
                                                 <constraint firstItem="OGu-XL-Evj" firstAttribute="centerY" secondItem="eSj-cc-2BO" secondAttribute="centerY" id="qku-6g-b0c"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="APO-c5-RAZ" secondAttribute="bottom" constant="8" id="s2i-ph-NSg"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -837,6 +838,9 @@
                                     <constraint firstAttribute="width" constant="50" id="blS-MW-c9n"/>
                                 </constraints>
                                 <state key="normal" backgroundImage="TwitterLogo"/>
+                                <connections>
+                                    <action selector="didTapProfile:" destination="Mbj-MX-TxT" eventType="touchUpInside" id="Tlh-Yd-9Kf"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DJg-PK-X2H" userLabel="buttonView">
                                 <rect key="frame" x="55" y="217.5" width="265" height="30"/>
@@ -936,6 +940,7 @@
                         <outlet property="tweetTextLabel" destination="dwr-QN-Ayj" id="Cia-Tc-pbx"/>
                         <outlet property="tweetUserImage" destination="QC9-Kn-eaE" id="cK6-ig-wkF"/>
                         <outlet property="tweetUsernameLabel" destination="aaN-se-5tW" id="bgU-n7-8Wd"/>
+                        <segue destination="cWc-LY-sho" kind="show" identifier="OtherUserSegue" id="gcU-R2-AP2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tpo-ZQ-2DZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1015,7 +1020,7 @@
                                 <rect key="frame" x="0.0" y="276" width="375" height="391"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <connections>
-                                    <segue destination="qB2-7m-ikq" kind="embed" id="gd8-wB-Pzq"/>
+                                    <segue destination="qB2-7m-ikq" kind="embed" identifier="EmbeddedTimeline" id="gd8-wB-Pzq"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -1188,7 +1193,6 @@
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ily-tU-DJ4" secondAttribute="trailing" constant="8" id="dZo-AJ-cDj"/>
                                                 <constraint firstItem="UoW-eK-yIE" firstAttribute="top" relation="greaterThanOrEqual" secondItem="bhl-1P-uJ3" secondAttribute="bottom" constant="8" id="e5P-mI-7PL"/>
                                                 <constraint firstItem="BHc-aB-fMC" firstAttribute="leading" secondItem="oWI-7I-1ca" secondAttribute="trailing" constant="8" id="gGY-v7-KUS"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="bhl-1P-uJ3" secondAttribute="bottom" constant="8" id="naB-DB-iuc"/>
                                                 <constraint firstItem="Sxn-Dm-6Kz" firstAttribute="leading" secondItem="Vxe-fH-JaC" secondAttribute="leadingMargin" id="wAw-qj-F7z"/>
                                                 <constraint firstItem="UoW-eK-yIE" firstAttribute="leading" secondItem="bhl-1P-uJ3" secondAttribute="leading" id="xnS-d1-vyz"/>
                                                 <constraint firstItem="BHc-aB-fMC" firstAttribute="top" secondItem="Vxe-fH-JaC" secondAttribute="top" constant="8" id="zdp-2y-vai"/>
@@ -1258,4 +1262,7 @@
         <image name="retweet-icon" width="30" height="30"/>
         <image name="retweet-icon-green" width="30" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="gcU-R2-AP2"/>
+    </inferredMetricsTieBreakers>
 </document>

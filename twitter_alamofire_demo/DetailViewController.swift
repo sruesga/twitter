@@ -21,6 +21,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var retweetButton: UIButton!
     
     var tweet: Tweet!
+    weak var delegate: TweetCellDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,8 +126,10 @@ class DetailViewController: UIViewController {
             }
         }
     }
-
     
+    @IBAction func didTapProfile(_ sender: Any) {
+        delegate?.didTapProfile(of: self.tweet.user)
+    }
 
     /*
     // MARK: - Navigation
@@ -137,4 +140,10 @@ class DetailViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+}
+
+extension DetailViewController: TweetCellDelegate {
+    func didTapProfile(of user: User) {
+        performSegue(withIdentifier: "OtherUserSegue", sender: user)
+    }
 }

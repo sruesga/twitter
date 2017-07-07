@@ -70,6 +70,13 @@ class TweetCell: UITableViewCell {
     @IBAction func didTapReply(_ sender: Any) {
     }
     
+    @IBAction func didTapProfile(_ sender: Any) {
+        delegate?.didTapProfile(of: self.tweet.user)
+    }
+    
+    
+    
+    
     @IBAction func didTapRetweet(_ sender: Any) {
 
         let button = sender as! UIButton

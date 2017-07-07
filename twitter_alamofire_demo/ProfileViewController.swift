@@ -17,7 +17,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var followingCountLabel: UILabel!
     @IBOutlet weak var followersCountLabel: UILabel!
     
-    var user: User?
+    var user: User = User.current!
     
     
     override func viewDidLoad() {
@@ -27,16 +27,16 @@ class ProfileViewController: UIViewController {
         profileImageView.layer.borderColor = UIColor.white.cgColor
         profileImageView.layer.borderWidth = 4
         
-        let myUser = user ?? User.current!
+
         
-        profileImageView.af_setImage(withURL: myUser.imageURL!)
-        userNameLabel.text = myUser.name
-        userScreenNameLabel.text = "@\(myUser.screenName)"
-        followingCountLabel.text = String(myUser.followingCount)
-        followersCountLabel.text = String(myUser.followerCount)
-        backgroundImageView.backgroundColor = UIColor(hex: myUser.backgroundColorHex)
+        profileImageView.af_setImage(withURL: user.imageURL!)
+        userNameLabel.text = user.name
+        userScreenNameLabel.text = "@\(user.screenName)"
+        followingCountLabel.text = String(user.followingCount)
+        followersCountLabel.text = String(user.followerCount)
+        backgroundImageView.backgroundColor = UIColor(hex: user.backgroundColorHex)
         
-        if let url = myUser.backgroundImageURL {
+        if let url = user.backgroundImageURL {
             backgroundImageView.af_setImage(withURL: url)
         }
     }
@@ -47,14 +47,19 @@ class ProfileViewController: UIViewController {
     }
     
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        switch segue.identifier! {
+        case "EmbeddedTimeline":
+            let vc = segue.destination as! PersonalTimelineViewController
+            vc.user = self.user
+        default:
+            print("Bad segue with no identifier")
+        }
     }
-    */
-
 }

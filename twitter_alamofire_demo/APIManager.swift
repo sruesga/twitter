@@ -145,7 +145,7 @@ class APIManager: SessionManager {
         }
     }
     
-    func getPersonalTimeline(completion: @escaping ([Tweet]?, Error?) -> ()) {
+    func getPersonalTimeline(with user: User, completion: @escaping ([Tweet]?, Error?) -> ()) {
 //        
 //        if let data = UserDefaults.standard.object(forKey: "personaltimeline_tweets") as? Data {
 //            let tweetDictionaries = NSKeyedUnarchiver.unarchiveObject(with: data) as! [[String: Any]]
@@ -157,7 +157,9 @@ class APIManager: SessionManager {
 //            return
 //        }
         
-        request(URL(string: "https://api.twitter.com/1.1/statuses/user_timeline.json")!, method: .get)
+        let parameters = ["screen_name": user.screenName]
+        
+        request(URL(string: "https://api.twitter.com/1.1/statuses/user_timeline.json")!, method: .get, parameters: parameters)
             .validate()
             .responseJSON { (response) in
                 guard response.result.isSuccess else {
@@ -182,8 +184,8 @@ class APIManager: SessionManager {
         }
     }
     
-    func getMorePeronalTimeline(with tweetId: Int64, completion: @escaping ([Tweet]?, Error?) -> ()) {
-        let parameters = ["max_id": tweetId]
+    func getMorePersonalTimeline(with tweetId: Int64, user: User, completion: @escaping ([Tweet]?, Error?) -> ()) {
+        let parameters: [String: Any] = ["max_id": tweetId, "screen_name": user.screenName]
         request(URL(string: "https://api.twitter.com/1.1/statuses/user_timeline.json")!, method: .get, parameters: parameters)
             .validate()
             .responseJSON { (response) in

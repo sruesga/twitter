@@ -11,13 +11,13 @@ import UIKit
 class PersonalTimelineViewController: TimelineViewController {
     
     
-    
+    var user: User!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-    
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,7 +31,7 @@ class PersonalTimelineViewController: TimelineViewController {
         if refreshing {
             self.refreshControl.beginRefreshing()
         }
-        APIManager.shared.getPersonalTimeline { (tweets, error) in
+        APIManager.shared.getPersonalTimeline(with: self.user) { (tweets, error) in
             if let tweets = tweets {
                 self.tweets = tweets
                 self.tableView.reloadData()
@@ -54,7 +54,7 @@ class PersonalTimelineViewController: TimelineViewController {
                 isMoreDataLoading = true
                 let tweetId = tweets.last!.id
                 // Code to load more results
-                APIManager.shared.getMorePeronalTimeline(with: tweetId) { (tweets, error) in
+                APIManager.shared.getMorePersonalTimeline(with: tweetId, user: self.user) { (tweets, error) in
                     if let tweets = tweets {
                         if tweets.count > 1 {
                             self.tweets += tweets
