@@ -211,6 +211,33 @@ class APIManager: SessionManager {
         }
     }
     
+    func getUserMessages(completion: @escaping ([Message]?, Error?) -> ()) {
+        request(URL(string: "https://api.twitter.com/1.1/direct_messages.json")!, method: .get)
+            .validate()
+            .responseJSON { (response) in
+                guard response.result.isSuccess else {
+                    completion(nil, response.result.error)
+                    return
+                }
+                guard let messageDictionaries = response.result.value as? [[String: Any]] else {
+                    print("Failed to parse messages")
+                    let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey : "Failed to parse tweets"])
+                    completion(nil, error)
+                    return
+                }
+                
+                let data = NSKeyedArchiver.archivedData(withRootObject: messageDictionaries)
+                UserDefaults.standard.set(data, forKey: "user_messages")
+                UserDefaults.standard.synchronize()
+                
+                let messages = messageDictionaries.flatMap({ (dictionary) -> Message in
+                    Message(dictionary: dictionary)
+                })
+                completion(messages, nil)
+        }
+    }
+    
+    
     // MARK: TODO: Favorite a Tweet
     func favorite(_ tweet: Tweet, completion: @escaping (Tweet?, Error?) -> ()) {
         let urlString = "https://api.twitter.com/1.1/favorites/create.json"

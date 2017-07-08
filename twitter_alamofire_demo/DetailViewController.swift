@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import ActiveLabel
 
 class DetailViewController: UIViewController {
 
     @IBOutlet weak var tweetUserImage: UIButton!
     @IBOutlet weak var tweetAuthorLabel: UILabel!
     @IBOutlet weak var tweetUsernameLabel: UILabel!
-    @IBOutlet weak var tweetTextLabel: UILabel!
+    @IBOutlet weak var tweetTextLabel: ActiveLabel!
     @IBOutlet weak var tweetDateLabel: UILabel!
     @IBOutlet weak var retweetCountLabel: UILabel!
     @IBOutlet weak var favoriteCountLabel: UILabel!
@@ -27,7 +28,14 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        tweetTextLabel.text = tweet.text
+        delegate = self
+        tweetTextLabel.customize { (label) in
+            label.text = tweet.text
+            label.enabledTypes = [.url]
+            label.URLColor = UIColor(red: 80.0/255, green: 168.0/255, blue: 252.0/255, alpha: 1)
+            label.textColor = UIColor.black
+            label.handleURLTap { url in UIApplication.shared.openURL(url) }
+        }
         tweetAuthorLabel.text = tweet.user.name
         tweetUserImage.clipsToBounds = true
         tweetUserImage.layer.masksToBounds = true
@@ -131,15 +139,21 @@ class DetailViewController: UIViewController {
         delegate?.didTapProfile(of: self.tweet.user)
     }
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        switch segue.identifier! {
+        case "OtherUserSegue":
+            let vc = segue.destination as! ProfileViewController
+            vc.user = sender as! User
+        default:
+            print("Bad segue from TimelineViewController to \(segue.destination)")
+        }
     }
-    */
 }
 
 extension DetailViewController: TweetCellDelegate {

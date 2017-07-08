@@ -13,6 +13,8 @@ target 'twitter_alamofire_demo' do
   pod 'KeychainAccess'
   pod 'AlamofireImage'
   pod 'RSKPlaceholderTextView'
+  pod 'DateToolsSwift'
+  pod 'ActiveLabel'
 
 
   target 'twitter_alamofire_demoTests' do

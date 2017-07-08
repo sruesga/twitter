@@ -8,6 +8,7 @@
 
 import UIKit
 import AlamofireImage
+import ActiveLabel
 
 protocol TweetCellDelegate: class {
     func didTapProfile(of user: User)
@@ -15,7 +16,7 @@ protocol TweetCellDelegate: class {
 
 class TweetCell: UITableViewCell {
     
-    @IBOutlet weak var tweetTextLabel: UILabel!
+    @IBOutlet weak var tweetTextLabel: ActiveLabel!
     @IBOutlet weak var tweetAuthorLabel: UILabel!
     @IBOutlet weak var tweetUsernameLabel: UILabel!
     @IBOutlet weak var tweetDateLabel: UILabel!
@@ -29,7 +30,13 @@ class TweetCell: UITableViewCell {
     
     var tweet: Tweet! {
         didSet {
-            tweetTextLabel.text = tweet.text
+            tweetTextLabel.customize { (label) in
+                label.text = tweet.text
+                label.enabledTypes = [.url]
+                label.URLColor = UIColor(red: 80.0/255, green: 168.0/255, blue: 252.0/255, alpha: 1)
+                label.textColor = UIColor.black
+                label.handleURLTap { url in UIApplication.shared.openURL(url) }
+            }
             tweetAuthorLabel.text = tweet.user.name
             tweetUserImage.clipsToBounds = true
             tweetUserImage.layer.masksToBounds = true
