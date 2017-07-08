@@ -421,7 +421,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="vBg-wP-CE3"/>
+                    <navigationItem key="navigationItem" title="Messages" id="vBg-wP-CE3"/>
                     <connections>
                         <outlet property="tableView" destination="Es8-k5-Snh" id="K0v-v8-fyR"/>
                     </connections>
