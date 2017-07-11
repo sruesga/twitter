@@ -32,8 +32,8 @@ class ProfileViewController: UIViewController {
         profileImageView.af_setImage(withURL: user.imageURL!)
         userNameLabel.text = user.name
         userScreenNameLabel.text = "@\(user.screenName)"
-        followingCountLabel.text = String(user.followingCount)
-        followersCountLabel.text = String(user.followerCount)
+        followingCountLabel.text = shortenCount(Int(user.followingCount))
+        followersCountLabel.text = shortenCount(Int(user.followerCount))
         backgroundImageView.backgroundColor = UIColor(hex: user.backgroundColorHex)
         
         if let url = user.backgroundImageURL {
@@ -46,6 +46,16 @@ class ProfileViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func shortenCount(_ count: Int) -> String{
+        print(count)
+        if count >= 1000000 {
+            return String(count/1000000) + "M"
+        } else if count >= 1000 {
+            return String(count/1000) + "K"
+        } else {
+            return String(count)
+        }
+    }
 
     // MARK: - Navigation
 

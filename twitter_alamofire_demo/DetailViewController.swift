@@ -43,8 +43,8 @@ class DetailViewController: UIViewController {
         tweetUserImage.af_setBackgroundImage(for: .normal, url: tweet.user.imageURL!)
         tweetUsernameLabel.text = "@" + tweet.user.screenName
         tweetDateLabel.text = tweet.createdAtString
-        retweetCountLabel.text = String(tweet.retweetCount)
-        favoriteCountLabel.text = String(tweet.favoriteCount)
+        retweetCountLabel.text = shortenCount(tweet.retweetCount)
+        favoriteCountLabel.text = shortenCount(tweet.favoriteCount)
         
         if tweet.favorited == true {
             favoriteButton.setImage(UIImage(named: "favor-icon-red"), for: .normal)
@@ -56,6 +56,17 @@ class DetailViewController: UIViewController {
             retweetButton.setImage(UIImage(named: "retweet-icon-green"), for: .normal)
         } else {
             retweetButton.setImage(UIImage(named: "retweet-icon"), for: .normal)
+        }
+    }
+    
+    func shortenCount(_ count: Int) -> String{
+        print(count)
+        if count >= 1000000 {
+            return String(count/1000000) + "M"
+        } else if count >= 1000 {
+            return String(count/1000) + "K"
+        } else {
+            return String(count)
         }
     }
 
